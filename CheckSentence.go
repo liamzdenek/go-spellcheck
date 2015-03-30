@@ -37,9 +37,7 @@ func (d *Dict) CheckSentence(sentence string) SentenceCorrectionSet {
         }
 
         word := sentence[beganat:i]
-        fmt.Printf("CHECKING: %s\n", word);
         r := d.CheckWord(word);
-        fmt.Printf("Got: %s\n", r.Correction);
         if r.IsCorrect == false && len(r.Correction) > 0 {
             res = append(res, SentenceCorrection{
                 BeginAt: beganat+1,

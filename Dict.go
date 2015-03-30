@@ -1,7 +1,5 @@
 package spellcheck
 
-import "fmt";
-
 // Dict is the central struct for this library. It maintains the worker
 // goroutines, and contains the internal data. All member functions of
 // dict are thread safe.
@@ -29,9 +27,6 @@ func NewDict() *Dict {
 // the dictionary. 0 means that the word was not found.
 func (d *Dict) Known(word string) int {
 	val, found := d.Dict[word]
-    if(val > 0) {
-        fmt.Printf("val: %s found: %d\n", word, val);
-    }
     if !found {
 		return 1 // treat novel words as if we've seen them once
 	}
