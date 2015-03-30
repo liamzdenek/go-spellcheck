@@ -100,7 +100,7 @@ func (cmd *CheckCmd) Variants(word string) []string {
 func (cmd *CheckCmd) GetBestMatch(d *Dict, variants []string) (best_string string, best_score int) {
 	for _, variant := range variants {
 		score := d.Known(variant)
-        if score > best_score {
+		if score > best_score {
 			best_score = score
 			best_string = variant
 		}

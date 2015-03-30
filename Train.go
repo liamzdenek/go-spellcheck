@@ -14,15 +14,15 @@ var DefaultDelimiters = " _=.?!,\n\"'"
 type TrainCmd struct {
 	Reader     io.Reader
 	Delimiters string
-    Done chan bool
+	Done       chan bool
 }
 
 // Run() is the internal TrainCmd function to fulfil the DictCmd
 // interface. This is executed within the Dict worker goroutine, and
 // should not be called directly.
 func (cmd *TrainCmd) Run(d *Dict) {
-	defer close(cmd.Done);
-    r := bufio.NewReader(cmd.Reader)
+	defer close(cmd.Done)
+	r := bufio.NewReader(cmd.Reader)
 	for {
 		line, err := r.ReadString('\n')
 		if err != nil {
@@ -35,7 +35,7 @@ func (cmd *TrainCmd) Run(d *Dict) {
 		words := strings.Split(line, " ")
 		for _, word := range words {
 			word = strings.Trim(word, cmd.Delimiters)
-			if _, found := d.Dict[word]; !found{
+			if _, found := d.Dict[word]; !found {
 				d.Dict[word] = 1
 			} else {
 				d.Dict[word]++
@@ -57,11 +57,11 @@ func (d *Dict) TrainFile(filename string) (error, chan bool) {
 // TrainReader() is identical to TrainDict() except a io.Reader is
 // provided instead of a file path.
 func (d *Dict) TrainReader(r io.Reader) chan bool {
-    c := make(chan bool);
-    d.PushQueue(&TrainCmd{
+	c := make(chan bool)
+	d.PushQueue(&TrainCmd{
 		Reader:     r,
 		Delimiters: DefaultDelimiters,
-        Done: c,
+		Done:       c,
 	})
-    return c;
+	return c
 }

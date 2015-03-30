@@ -27,7 +27,7 @@ func NewDict() *Dict {
 // the dictionary. 0 means that the word was not found.
 func (d *Dict) Known(word string) int {
 	val, found := d.Dict[word]
-    if !found {
+	if !found {
 		return 1 // treat novel words as if we've seen them once
 	}
 	return val
